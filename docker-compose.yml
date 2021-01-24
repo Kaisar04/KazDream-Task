@@ -1,0 +1,25 @@
+version: "3.8"
+   
+services:
+    djangoapi:
+        build: .
+        container_name: djangoapi
+        command: python manage.py runserver 0.0.0.0:8000
+        volumes:
+            - .:/usr/src/app/
+        ports:
+            - "8000:8000"
+        depends_on:
+            - pgdbase
+    pgdbase:
+        image: postgres
+        container_name: pgdbase
+        environment:
+            - POSTGRES_DB=postgres
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=postgres
+        volumes:
+            - pgdata:/var/lib/postgresql/data/
+        
+volumes:
+    pgdata:
